@@ -9,18 +9,18 @@
 #define EEPROM_WRITE(x)      eeprom_write_block(&x, EEPROM_ADDRESS(x), sizeof(x))
 
 // can define var/eeprom var pair, defining an initial value: EEPROM_VAR (int a) = 0;
-#define EEPROM_VAR(var_type, var_name)\
-	var_type var_name;\
+#define EEPROM_VAR(var_type, var_name)       \
+	var_type var_name;                   \
 	var_type EEPROM_NAME(var_name) EEMEM 
 
 #define VAR_FN(var_name) var_name ## Init
 
 // defines SRAM/EEPROM var pair with loading EEPROM into SRAM code just before main() call
-#define EEPROM_AUTO_VAR(var_type, var_name, var_value)     \
-	EEPROM_VAR(var_type, var_name) = var_value;            \
-	void VAR_FN(var_name) (void) __attribute__ ((naked))   \
-    __attribute__ ((section (".init8")));                  \
-	void VAR_FN(var_name) (void){EEPROM_READ(var_name);}      \
+#define EEPROM_AUTO_VAR(var_type, var_name, var_value)       \
+	EEPROM_VAR(var_type, var_name) = var_value;          \
+	void VAR_FN(var_name) (void) __attribute__ ((naked)) \
+    __attribute__ ((section (".init8")));                    \
+	void VAR_FN(var_name) (void){EEPROM_READ(var_name);} \
 
 #define EEPROM_SETUP(a,b) {addr:(uint8_t*)&(a), value:(b)}
 
