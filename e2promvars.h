@@ -3,9 +3,16 @@
 
 #include <avr/eeprom.h>
 
+// helper macro
 #define EEPROM_NAME(x)       eeprom_ ## x
+
+// helpe macro
 #define EEPROM_ADDRESS(x)    ((&EEPROM_NAME(x)))
+
+// Call to read variable from EEPROM
 #define EEPROM_READ(x)       eeprom_read_block(&x, EEPROM_ADDRESS(x), sizeof(x))
+
+// Call to store variable to EEPROM
 #define EEPROM_WRITE(x)      eeprom_write_block(&x, EEPROM_ADDRESS(x), sizeof(x))
 
 // can define var/eeprom var pair, defining an initial value: EEPROM_VAR (int a) = 0;
@@ -38,8 +45,10 @@ typedef char* _pointer;
 
 #define EEPROM_CONFIG_END(name) (EEPROM_CONFIG_ADR(name) + sizeof(name))
 
+// Uses EEPROM_CONFIG defined data to setup device
 #define EEPROM_CONFIGURE(name) eeprom_setup(&name[0], sizeof(name))
 
+// Rewrites EEPROM config to registers. Don't call directly, use EEPROM_CONFIG instead
 void eeprom_setup(const _setup_rec * data, uint16_t size);
 
 #endif
