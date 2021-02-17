@@ -16,7 +16,7 @@ main()
   setPWM(ledBrightness);
 }
 ```
-### Autoimatic EEPROM variable
+### Automatic EEPROM variable
 ```C
 EEPROM_AUTO_VAR(var_type, var_name)
 ```
@@ -57,11 +57,42 @@ EEPROM_AUTO_VAR(uint8_t, ledBrightness) = 127;
 main()
 {
   int newLedBrightness = checkButtons(ledBrightness);
-  setPWM(ledBrightness);
+  setPWM(newLedBrightness);
   if (newLedBrightness != ledBrightness)
   {
     ledBrightness= newLedBrightness;
     EEPORM_WRITE(ledBrightness); // EEPORM_WRITE(newLedBrightness) wouldn't work
   }
+}
+```
+## Configuration
+### Config set
+```C
+EEPROM_CONFIG(name)
+```
+Defines set of configuration data as a vetor filled with `EEPROM_SETUP` entries. This may be complete device initialization or partial configuration so there can be many sets in system. 
+#### Note
+Setting just few registers directly in code may be more efficient than using EEPROM config.
+### Config entry
+```C
+EEPROM_SETUP(reg, value)
+```
+Defines register/value as a pair of configuration set.
+### Using configuration
+```C
+EEPROM_CONFIGURE(name)
+```
+Rewrites configuration set from EEPROM to AVR's registers. Since it calls a function which does the job in loop the amount of used program memory does not depend on the number of entries in config data set. This technique may save some program bytes at a cost of EEPROM memory. On devices with small prghram memories it may be crucial.
+#### Example:
+```C
+EEPORM_CONFIG(pwmEnable) =
+{
+  EEPROM_SETUP(PWMREG0, 1 << PWM_EN | 1 << PWM_PRESC_2),
+  EEPROM_SETUP(PWMMAX, 128)
+};
+
+main()
+{
+  EEPROM_CONFIGURE(pwmEnable);
 }
 ```
