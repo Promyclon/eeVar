@@ -34,7 +34,7 @@ main()
 ```C
 EEPROM_READ(x)
 ```
-Reads value of variable from EEPROM to RAM memory. This must be a variable defined with `EEPROM_VAR` or 'EEPROM_AUTO_VAR` macros.
+Reads value of a variable from EEPROM to RAM memory. This must be a variable defined with `EEPROM_VAR` or 'EEPROM_AUTO_VAR` macros.
 #### Example:
 ```C
 EEPROM_VAR(uint8_t, ledBrightness) = 127;
@@ -49,7 +49,7 @@ main()
 ```C
 EEPROM_WRITE(x)
 ```
-Reads value of variable from EEPROM to RAM memory. This must be a variable defined with `EEPROM_VAR` or `EEPROM_AUTO_VAR` macros.
+Writes value of a variable from RAM to EEPROM memory. This must be a variable defined with `EEPROM_VAR` or `EEPROM_AUTO_VAR` macros.
 #### Example:
 ```C
 EEPROM_AUTO_VAR(uint8_t, ledBrightness) = 127;
