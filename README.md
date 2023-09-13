@@ -20,7 +20,7 @@ main()
 ```C
 EEPROM_AUTO_VAR(var_type, var_name)
 ```
-Defines EEPROM stored variable of type `var_type`, named `var_name` with a value strored in EEPROM. This value will be automaticaly read into `var_name' in RAM in `.init8` section just before the main() function starts execution. Then, the definition alone is enough to get pre-initialized variable ready to use as soon as the program starts.
+Defines EEPROM stored variable of type `var_type`, named `var_name` with a value strored in EEPROM. This value will be automaticaly read into `var_name` in RAM in `.init8` section just before the main() function starts execution. Then, the definition alone is enough to get pre-initialized variable ready to use as soon as the program starts.
 #### Example:
 ```C
 EEPROM_AUTO_VAR(uint8_t, ledBrightness) = 127;
